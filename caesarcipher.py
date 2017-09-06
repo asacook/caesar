@@ -12,41 +12,28 @@ def getCharIndex(char):
 
 
 
-def encryptcaesar(plaintext, key):
+def caesar(plaintext, key):
   cipher = ""
   for char in plaintext:
     plaintextCharIndex = getCharIndex(char)
     if plaintextCharIndex == "ERR!":
       return "Error in plaintext: illegal character"
     else:
-      if (len(messageSpace) - plaintextCharIndex) < key:
-        cipher = cipher + messageSpace[(key - (len(messageSpace) - plaintextCharIndex))]
-      else:
-        cipher = cipher + messageSpace[plaintextCharIndex + key]
+      if (sys.argv[3] == "e"):
+
+        if ((len(messageSpace)-1) - plaintextCharIndex) < key:
+          cipher = cipher + messageSpace[(key - (len(messageSpace) - plaintextCharIndex))]
+        else:
+          cipher = cipher + messageSpace[plaintextCharIndex + key]
     
+      if (sys.argv[3] == "d"):
+        if plaintextCharIndex < key:
+          cipher = cipher + messageSpace[len(messageSpace) - (key -plaintextCharIndex)]
+        else:
+          cipher = cipher + messageSpace[plaintextCharIndex - key]
+
   return cipher
 
+print(caesar(sys.argv[1], int(sys.argv[2])))
 
-
-def decryptcaesar(cipher, key):
-  plaintext = ""
-  for char in cipher:
-    plaintextCharIndex = getCharIndex(char)
-    if plaintextCharIndex == "ERR!":
-      return "Error in plaintext: illegal character"
-    else:
-      if plaintextCharIndex < key:
-        plaintext = plaintext + messageSpace[len(messageSpace) - (key -plaintextCharIndex)]
-      else:
-        plaintext = plaintext + messageSpace[plaintextCharIndex - key]
-    
-  return plaintext
-
-
-
-if (sys.argv[3] == "e"):
-  print(encryptcaesar(sys.argv[1], int(sys.argv[2])))
-
-if (sys.argv[3] == "d"):
-  print(decryptcaesar(sys.argv[1], int(sys.argv[2])))
 
